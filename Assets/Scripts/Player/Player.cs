@@ -5,6 +5,10 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 	public int currentTile;
 	public bool _skipsTurn = false;
+	public int addedSteps;
+
+	public Dice dice;
+
 
 	void Start() {
 
@@ -20,6 +24,12 @@ public class Player : MonoBehaviour {
 			_skipsTurn = false;
 			EndTurn();
 		}
+
+		
+
+		//walk(dice)
+
+
 	}
 
 	public void EndTurn() {

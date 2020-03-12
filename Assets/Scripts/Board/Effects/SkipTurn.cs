@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SkipTurn : MonoBehaviour {
-	public Game game;
+	[SerializeField]
+	private Game game;
 
 	private void Skip(GameObject player) {
 		game.player.GetComponent<Player>()._skipsTurn = true;
