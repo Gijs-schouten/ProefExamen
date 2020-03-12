@@ -14,13 +14,12 @@ public class PlayerMovement : MonoBehaviour
     private bool _isMoving = false;
     private int sharting;
 
-        void Start()
+    void Start()
     {
         _diceRoll = 4;
         anim.GetComponent<Animator>();
-        nextSpaceVector = new Vector3 (_nextSpace.transform.position.x, _nextSpace.transform.position.y + .5f, _nextSpace.transform.position.z);
+        nextSpaceVector = new Vector3(_nextSpace.transform.position.x, _nextSpace.transform.position.y + .5f, _nextSpace.transform.position.z);
     }
-
 
     void Update()
     {
@@ -29,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
             GoToNextSpace();
         }
     }
+
     void GoToNextSpace()
     {
        if(sharting <= _diceRoll && !_isMoving)
@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
         {
             yield return null;
             _elapsedTime += Time.deltaTime;
-            player.transform.position = Vector3.Lerp(player.transform.position,nextSpaceVector, .05f);
+            player.transform.position = Vector3.Lerp(player.transform.position,nextSpaceVector, .06f);
             anim.SetBool("isJumping", false);
         }
         _elapsedTime = 0;
