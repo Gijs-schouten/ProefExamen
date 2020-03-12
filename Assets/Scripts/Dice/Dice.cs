@@ -9,4 +9,12 @@ public class Dice : MonoBehaviour {
 	public void RollDice() {
 		DiceRoll?.Invoke(UnityEngine.Random.Range(1, 12));
 	}
+
+    void Update()
+    {
+        if (Input.GetKeyDown("space"))
+        {
+            RollDice();
+        }
+    }
 }

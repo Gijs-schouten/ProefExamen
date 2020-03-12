@@ -1,45 +1,47 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     public GameObject player;
-    private GameObject _nextSpace;
     public Animator anim;
-    private int _currentSpace = 0;
-    private Game _game;
+    public event Action FinalSpace;
+
+    private GameObject _nextSpace;
     private GameObject[] _spaces;
+
+    private Game _game;
+
+    private bool _isMoving = false;
     private float _elapsedTime;
     private float _waitTime = 1.5f;
-    private Vector3 _nextSpaceVector;
-    private int _diceRoll;
-    private bool _isMoving = false;
     private int _stepCounter;
+    private int _amount;
+    private int _currentSpace = 0;
+    private Vector3 _nextSpaceVector;
+
+    Coroutine lastRoutine = null;
 
     void Start()
     {
-        _diceRoll = 4;
         _game = GetComponent<Game>();
         _spaces = _game.tiles;        
         anim.GetComponent<Animator>();
+        FinalSpace += Reset;
     }
 
-	void Update() {
-		if (Input.GetKeyDown("space")) {
-			GoToNextSpace(1);
-		}
-	}
-
-    void GoToNextSpace(int steps)
+   public void GoToNextSpace(int steps)
     {
-       if(_stepCounter <= steps && !_isMoving)
+        _amount = steps;
+       if(_stepCounter < steps && !_isMoving)
         {
             _stepCounter += 1;
             anim.SetBool("isJumping", true);
             _nextSpace = _spaces[_currentSpace +=1];
             _nextSpaceVector = new Vector3(_nextSpace.transform.position.x, _nextSpace.transform.position.y + .5f, _nextSpace.transform.position.z);
-            StartCoroutine(MoveToNextSpace());
+            lastRoutine = StartCoroutine(MoveToNextSpace());          
         }
     }
 
@@ -56,6 +58,20 @@ public class PlayerMovement : MonoBehaviour
         _elapsedTime = 0;
         player.transform.position = _nextSpaceVector;
         _isMoving = false;
-        GoToNextSpace(1);
+     
+        if (_stepCounter < _amount)
+        {
+            GoToNextSpace(_amount);
+        }
+        else
+        {
+            FinalSpace?.Invoke();
+        }
+    }
+
+    private void Reset()
+    {
+        StopCoroutine(lastRoutine);
+        _stepCounter = 0;
     }
 }
