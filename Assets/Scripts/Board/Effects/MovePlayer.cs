@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MovePlayer : MonoBehaviour {
 	[SerializeField]
@@ -10,6 +8,6 @@ public class MovePlayer : MonoBehaviour {
 	private Game game;
 
 	private void AddSteps() {
-		game.player.GetComponent<Player>().addedSteps = _steps;
+		game.player.GetComponent<Player>().Move(_steps);
 	}
 }
