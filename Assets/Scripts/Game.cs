@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Game : MonoBehaviour {
 	private int _playerCount;
-	private int _currentPlayer;
+	public int currentPlayerID;
 
 	[SerializeField]
 	private GameObject[] _players;
@@ -21,9 +21,9 @@ public class Game : MonoBehaviour {
 	}
 
 	private void StartTurn() {
-		_currentPlayer = (_currentPlayer % _playerCount) + 1;
-		player = _players[_currentPlayer - 1];
-		player.GetComponent<Player>().StartTurn();
+		currentPlayerID = (currentPlayerID % _playerCount) + 1;
+		player = _players[currentPlayerID - 1];
+		//player.GetComponent<Player>().StartTurn();
 	}
 
 	private void EndTurn() {

@@ -5,14 +5,18 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 	public int currentTile;
 	public bool _skipsTurn = false;
+	public int addedSteps;
+
+	[SerializeField]
+	private int _playerID;
+
+	public Dice dice;
+	public PlayerMovement move;
+	public Game game;
+
 
 	void Start() {
-
-	}
-
-	// Update is called once per frame
-	void Update() {
-		
+		dice.DiceRoll += Move;
 	}
 
 	public void StartTurn() {
@@ -20,6 +24,15 @@ public class Player : MonoBehaviour {
 			_skipsTurn = false;
 			EndTurn();
 		}
+
+	}
+
+	public void Move(int amount) {
+		if(_playerID != game.currentPlayerID) {
+			return;
+		}
+
+		move.GoToNextSpace(amount);
 	}
 
 	public void EndTurn() {

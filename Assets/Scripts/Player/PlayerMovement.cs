@@ -25,20 +25,18 @@ public class PlayerMovement : MonoBehaviour
         anim.GetComponent<Animator>();
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown("space"))
-        {
-            GoToNextSpace();
-        }
-    }
+	void Update() {
+		if (Input.GetKeyDown("space")) {
+			GoToNextSpace(1);
+		}
+	}
 
-    void GoToNextSpace()
+    void GoToNextSpace(int steps)
     {
-       if(_stepCounter <= _diceRoll && !_isMoving)
+       if(_stepCounter <= steps && !_isMoving)
         {
-                _stepCounter += 1;
-                anim.SetBool("isJumping", true);
+            _stepCounter += 1;
+            anim.SetBool("isJumping", true);
             _nextSpace = _spaces[_currentSpace +=1];
             _nextSpaceVector = new Vector3(_nextSpace.transform.position.x, _nextSpace.transform.position.y + .5f, _nextSpace.transform.position.z);
             StartCoroutine(MoveToNextSpace());
@@ -58,6 +56,6 @@ public class PlayerMovement : MonoBehaviour
         _elapsedTime = 0;
         player.transform.position = _nextSpaceVector;
         _isMoving = false;
-        GoToNextSpace();
+        GoToNextSpace(1);
     }
 }
