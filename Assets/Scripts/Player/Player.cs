@@ -28,10 +28,10 @@ public class Player : MonoBehaviour {
 	}
 
 	public void Move(int amount) {
-		if(_playerID != game.currentPlayerID) {
+        /*if(_playerID != game.currentPlayerID) {
 			return;
-		}
-
+		}*/
+        Debug.Log(amount);
 		move.GoToNextSpace(amount);
 	}
 
